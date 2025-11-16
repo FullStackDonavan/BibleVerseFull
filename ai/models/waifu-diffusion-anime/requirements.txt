@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+diffusers
+transformers
+torch
+peft
+accelerate
+pillow
+python-multipart

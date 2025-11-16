@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nginx-rtmp:
+    image: tiangolo/nginx-rtmp
+    container_name: nginx-rtmp
+    ports:
+      - "1935:1935"   # RTMP
+      - "8080:80"     # optional for HLS/HTTP
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+  python-relay:
+    build:
+      context: ./python-relay
+    container_name: python-relay
+    depends_on:
+      - nginx-rtmp
+      - ffmpeg
+    networks:
+      - live-streaming
+
+  ffmpeg:
+    build:
+      context: ./ffmpeg
+    container_name: ffmpeg
+    networks:
+      - live-streaming
+
+networks:
+  live-streaming:
+    driver: bridge

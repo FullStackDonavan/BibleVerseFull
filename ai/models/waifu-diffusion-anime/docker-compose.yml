@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  anime-diffusion-api:
+    build: .
+    container_name: anime-diffusion-api
+    ports:
+      - "5002:5002"
+    environment:
+      - LORA_MODEL_PATH=/app/anime_lora.safetensors
+      - HOST_URL=http://localhost:5002
+    volumes:
+      - ./generated:/app/generated
+      - ./anime_lora.safetensors:/app/anime_lora.safetensors:ro
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    runtime: nvidia

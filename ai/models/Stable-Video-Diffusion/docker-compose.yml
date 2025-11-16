@@ -1,0 +1,17 @@
+services:
+  svd-video-api:
+    build: .
+    container_name: svd-video-api
+    ports:
+      - "5003:5003"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    runtime: nvidia
+    volumes:
+      - ./generated_videos:/app/generated_videos

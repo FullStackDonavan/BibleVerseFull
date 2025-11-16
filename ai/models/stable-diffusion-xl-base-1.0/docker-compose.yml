@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  stable-diffusion-api:
+    build: .
+    container_name: stable-diffusion-api
+    ports:
+      - "5002:5002"
+    environment:
+      - SD_MODEL_ID=stabilityai/stable-diffusion-xl-base-1.0
+    volumes:
+      - ./generated:/app/generated  # your output folder for images
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    runtime: nvidia  # crucial for GPU access in Docker < Compose v2.4

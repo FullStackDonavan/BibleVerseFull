@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+torch>=1.10
+numpy>=1.19
+tqdm
+requests
+ffmpeg-python
+openai-whisper

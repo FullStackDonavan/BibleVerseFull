@@ -1,0 +1,7 @@
+flask
+flask-cors
+torch  # Will install CUDA version inside container automatically, specify in Dockerfile
+diffusers
+transformers
+Pillow
+accelerate
